@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const app = express();
 const userSignupSchema = require('../schema/userModel');
+require('dotenv').config()
 
 app.use(express.json());
 
@@ -23,8 +24,6 @@ app.post('/login', async (req, res) => {
     if (!passwordMatch) {
       return res.json({ message: 'Invalid credentials', success: false });
     }
-
-    // Create a JWT token with the user's email as the payload
     const token = jwt.sign({ email: user.email }, jwtSecretKey);
 
     res.json({ message: 'Welcome', success: true, token });
